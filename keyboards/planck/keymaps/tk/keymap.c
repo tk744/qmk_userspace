@@ -150,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER |  Caps |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM1 Rec|DM2 Rec|
+        | HYPER |  Caps |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * PANIC:            BACKSPACE on tap, DELETE on tap with RSHIFT
@@ -163,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    PANIC,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, SH_QUOT,
-        HYPER,   KC_CAPS, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2
+        HYPER,   KC_CAPS, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
     ),
 
     /* Hyper - keyboard adjustments and function keys
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |T Click|  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |C Music|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |  xXx  |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |       |       |       |       |
+        |  xXx  |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       |  xXx  |
         |-----------------------------------------------------------------------------------------------|
 
     */
@@ -183,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         R_MODES, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  RESET,
         AU_TOG,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  MU_TOG,
         CK_TOGG, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
-        XXXXXXX, KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, _______, _______, _______, _______
+        XXXXXXX, KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, XXXXXXX
     ),
 
     /* Rotary - change rotary encoder mode
@@ -215,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   7   |   8   |   9   |   0   |   -   |   _   |   (   |   )   |   <   |   >   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER2|      BASE     | RAISE1|       |       |       |       |
+        |       |       |       |       | LOWER2|               | RAISE1|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * The following symbols are found on other layers: $ * /
@@ -227,7 +227,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_1,    KC_2,    KC_3,    KC_DLR, KC_ASTR, KC_SLSH, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, KC_4,    KC_5,    KC_6,    KC_DOT, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, _______,
         _______, KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS, KC_UNDS, KC_LPRN, KC_RPRN, KC_LABK, KC_RABK, _______,
-        _______, _______, _______, _______, LOWER2, BASE,    BASE,    RAISE1,  _______, _______, _______, _______
+        _______, _______, _______, _______, LOWER2, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
     /* Lower II - macros
@@ -239,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       | CHMOD |       | g cmt |py venv|       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |      BASE     | RAISE1|       |       |       |       |
+        |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * DO NOT INCLUDE DESTRUCTIVE MACROS
@@ -249,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   _______,
         _______, XXXXXXX, SHEBANG, DEL_LN,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, CHMOD,   XXXXXXX, GT_CMT,  PY_VENV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, _______, _______, _______, XXXXXXX, BASE,    BASE,    RAISE1,  _______, _______, _______, _______
+        _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
     /* Raise I - symbols and movement
@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   &   |   *   |   (   |   )   |       |       |   ~   |   `   |   |   |   \   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER1|      BASE     | RAISE2|       |       |       |       |
+        |       |       |       |       | LOWER1|               | RAISE2|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * It is not recomended to use the (  ) symbols on this layer
@@ -272,7 +272,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______,
         _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
         _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
-        _______, _______, _______, _______, LOWER1,  BASE,    BASE,    RAISE2,  _______, _______, _______,  _______
+        _______, _______, _______, _______, LOWER1,  _______, _______, RAISE2,  _______, _______, _______,  _______
     ),
 
     /* Raise II - mouse navigation
@@ -284,7 +284,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |       |       |       | L Ck  | R ck  | Slow  | Fast  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER1|      BASE     |  xXx  |       |       |       |       |
+        |       |       |       |       | LOWER1|               |  xXx  |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
     */
@@ -292,7 +292,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, KC_ACL1, KC_ACL2, _______,
-        _______, _______, _______, _______, LOWER1,  BASE,    BASE,    XXXXXXX, _______, _______, _______, _______
+        _______, _______, _______, _______, LOWER1,  _______, _______, XXXXXXX, _______, _______, _______, _______
     ),
 
 };
