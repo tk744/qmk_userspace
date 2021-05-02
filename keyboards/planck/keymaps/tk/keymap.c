@@ -54,6 +54,7 @@ enum planck_layers {
 #define HYPER   MO(_HYPER)
 #define R_MODES MO(_ROTOR)
 
+// these keys need to bee OSL so that xxx2 can be activated
 #define LOWER1  OSL(_LOWER1)
 #define LOWER2  OSL(_LOWER2)
 #define RAISE1  OSL(_RAISE1)
@@ -169,21 +170,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Hyper - keyboard adjustments and function keys
 
         |-----------------------------------------------------------------------------------------------|
-        | ROTARY|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Reset |
+        | ROTARY|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |T Audio|  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |T Music|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |T Click|  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |C Music|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |  xXx  |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       |  xXx  |
+        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       | Reset |
         |-----------------------------------------------------------------------------------------------|
 
     */
     [_HYPER] = LAYOUT_planck_grid(
-        R_MODES, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  RESET,
+        R_MODES, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
         AU_TOG,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  MU_TOG,
         CK_TOGG, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
-        XXXXXXX, KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, XXXXXXX
+        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, RESET
     ),
 
     /* Rotary - change rotary encoder mode
@@ -230,29 +231,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, LOWER2, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
-    /* Lower II - macros
-
-        |-----------------------------------------------------------------------------------------------|
-        |       |       |       | email |       |       |       |       |       |       | phone |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       | g stat| del ln|       |       |       |       |       |       |       |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       | CHMOD |       | g cmt |py venv|       |       |       |       |       |       |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
-        |-----------------------------------------------------------------------------------------------|
-
-        * DO NOT INCLUDE DESTRUCTIVE MACROS
-
-    */
-    [_LOWER2] = LAYOUT_planck_grid(
-        _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   _______,
-        _______, XXXXXXX, SHEBANG, DEL_LN,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, CHMOD,   XXXXXXX, GT_CMT,  PY_VENV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
-    ),
-
-    /* Raise I - symbols and movement
+        /* Raise I - symbols and movement
 
         |-----------------------------------------------------------------------------------------------|
         |       |   !   |   @   |   #   |       |       |       | S lt  | S up  | S dn  | S rt  |       |
@@ -273,6 +252,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
         _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
         _______, _______, _______, _______, LOWER1,  _______, _______, RAISE2,  _______, _______, _______,  _______
+    ),
+
+    // IDEA: merge RAISE II and LOWER II
+
+    /* Lower II - macros
+
+        |-----------------------------------------------------------------------------------------------|
+        |       |       |       | email |       |       |       |       |       |       | phone |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |       | g stat| del ln|       |       |       |       |       |       |       |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       | CHMOD |       | g cmt |py venv|       |       |       |       |       |       |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
+        |-----------------------------------------------------------------------------------------------|
+
+        * DO NOT INCLUDE DESTRUCTIVE MACROS
+
+    */
+    [_LOWER2] = LAYOUT_planck_grid(
+        _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   _______,
+        _______, XXXXXXX, SHEBANG, DEL_LN,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, CHMOD,   XXXXXXX, GT_CMT,  PY_VENV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
     /* Raise II - mouse navigation
