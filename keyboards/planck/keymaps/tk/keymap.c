@@ -256,11 +256,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Lower II - macros
 
         |-----------------------------------------------------------------------------------------------|
-        |       |       |       | email |       |       |       |       |       |       | phone |       |
+        |       |       |       | email |       |       |       |       |       |       | phone | del ln|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       | g stat| del ln|       |       |       |       |       |       |       |       |
+        |       |       | g stat|       |       |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       | CHMOD |       | g cmt |py venv|       |       |       |       |       |       |       |
+        |       | chmod |       | g cmt |py venv|       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -269,8 +269,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER2] = LAYOUT_planck_grid(
-        _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   _______,
-        _______, XXXXXXX, SHEBANG, DEL_LN,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   DEL_LN,
+        _______, XXXXXXX, SHEBANG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, CHMOD,   XXXXXXX, GT_CMT,  PY_VENV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
@@ -352,9 +352,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     #ifdef AUDIO_ENABLE
     switch (get_highest_layer(state)) {
         case _BASE:
-            // enabling base layer song breaks a lot of other songs including
-            // - macro recording start song
+            // enabling base layer song breaks other songs 
+            // which also play when returning to base layer including:
             // - rotary feedback songs
+            // - macro recording start song
             
             // PLAY_SONG(base_song);
             break;
