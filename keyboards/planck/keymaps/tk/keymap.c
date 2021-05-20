@@ -67,7 +67,6 @@ enum planck_layers {
 
 enum keycodes {
     ROTARY = SAFE_RANGE,
-    PANIC,                  // backspace on tap, delete on tap with RSHIFT
 
     // rotary modes
     R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
@@ -144,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base
 
         |-----------------------------------------------------------------------------------------------|
-        | Rotary|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | Panic |
+        | Rotary|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   |BkSpace|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Tab  |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   | Enter |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -153,27 +152,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         | HYPER |  Caps |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
-        * PANIC:            BACKSPACE on tap, DELETE on tap with RSHIFT
         * TAB:              CTRL on hold
         * ESC and ':        SHIFT on hold
 
     */
 
     [_BASE] = LAYOUT_planck_grid(
-        ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    PANIC,
+        ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
         HYPER,   KC_CAPS, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
     ),
 
-    /* Hyper - keyboard adjustments and function keys
+    /* Hyper - function keys
 
         |-----------------------------------------------------------------------------------------------|
         | ROTARY|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Audio|  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |T Music|
+        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Click|  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |C Music|
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       | Reset |
         |-----------------------------------------------------------------------------------------------|
@@ -181,19 +179,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_HYPER] = LAYOUT_planck_grid(
         R_MODES, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
-        AU_TOG,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  MU_TOG,
-        CK_TOGG, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
+        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, RESET
     ),
 
-    /* Rotary - change rotary encoder mode
+    /* Rotary - rotary encoder modes and keyboard adjustments
 
         |-----------------------------------------------------------------------------------------------|
         |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|       |
+        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  vol  | bright|       | media |       |       |       |       |
+        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |  xXx  |      BASE     |  xXx  |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -201,8 +199,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_ROTOR] = LAYOUT_planck_grid(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
+        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
@@ -235,9 +233,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-----------------------------------------------------------------------------------------------|
         |       |   !   |   @   |   #   |       |       |       | S lt  | S up  | S dn  | S rt  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |   $   |   %   |   ^   |       |       |       | Left  | Down  |  Up   | Right |       |
+        |       |   $   |   %   |   ^   |       |   +   |   =   | Left  | Down  |  Up   | Right |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |   &   |   *   |   (   |   )   |       |       |   ~   |   `   |   |   |   \   |       |
+        |       |   &   |   *   |   (   |   )   |   -   |   _   |   ~   |   `   |   |   |   \   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       | LOWER1|               | RAISE2|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -248,8 +246,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_RAISE1] = LAYOUT_planck_grid(
         _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______,
-        _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
-        _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
+        _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, KC_PLUS, KC_EQL,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
+        _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_MINS, KC_UNDS, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
         _______, _______, _______, _______, LOWER1,  _______, _______, RAISE2,  _______, _______, _______,  _______
     ),
 
@@ -389,7 +387,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 // Keycode events
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    static bool panic_del = false;      // PANIC in delete-mode
     static bool caps_active = false;
 
     switch (keycode) {
@@ -402,28 +399,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         ██   ██ ███████    ██     ██████  ██████  ██████  ███████ ███████
         */
 
-        case PANIC:
-            if (record->event.pressed) {
-                if (RSFT_MASK) {
-                    unregister_code(KC_RSFT);
-                    register_code(KC_DEL);
-                    panic_del = true;
-                }
-                else {
-                    register_code(KC_BSPACE);
-                }
-            }
-            else {
-                if (panic_del) {
-                    register_code(KC_RSFT);
-                    unregister_code(KC_DEL);
-                    panic_del = false;
-                }
-                else {
-                    unregister_code(KC_BSPACE);
-                }
-            }
-            return false;
         case KC_CAPS:
             if (record->event.pressed) {
                 caps_active = !caps_active;
