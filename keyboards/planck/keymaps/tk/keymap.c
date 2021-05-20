@@ -47,12 +47,12 @@ enum planck_layers {
     _LOWER2,
     _RAISE2,
     _HYPER,
-    _ROTOR,
+    _ADJUST,
 };
 
-#define BASE    TO(_BASE)
-#define HYPER   MO(_HYPER)
-#define R_MODES MO(_ROTOR)
+#define BASE   TO(_BASE)
+#define HYPER  MO(_HYPER)
+#define ADJUST MO(_ADJUST)
 
 // these keys need to bee OSL so that xxx2 can be activated
 #define LOWER1  OSL(_LOWER1)
@@ -110,7 +110,7 @@ float dmacro_play_song[][2]     = SONG(MARIO_PIPE);
 // layer toggle songs
 float base_song[][2]            = SONG(MARIO_BUMP);
 float hyper_song[][2]           = SONG(MARIO_POWERUP_BLOCK);
-float rotary_song[][2]          = SONG(MARIO_POWERUP);
+float adjust_song[][2]          = SONG(MARIO_PIPE);
 float raise1_song[][2]          = SONG(MARIO_POWERUP_BLOCK);
 float raise2_song[][2]          = SONG(MARIO_POWERUP);
 float lower1_song[][2]          = SONG(MARIO_POWERUP_BLOCK);
@@ -164,46 +164,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         HYPER,   KC_CAPS, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
     ),
 
-    /* Hyper - function keys
-
-        |-----------------------------------------------------------------------------------------------|
-        | ROTARY|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       | Reset |
-        |-----------------------------------------------------------------------------------------------|
-
-    */
-    [_HYPER] = LAYOUT_planck_grid(
-        R_MODES, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
-        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
-        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, RESET
-    ),
-
-    /* Rotary - rotary encoder modes and keyboard adjustments
-
-        |-----------------------------------------------------------------------------------------------|
-        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |      BASE     |  xXx  |       |       |       |       |
-        |-----------------------------------------------------------------------------------------------|
-
-    */
-    [_ROTOR] = LAYOUT_planck_grid(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
-        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
-        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-    ),
-
     /* Lower I - numbers and brackets
 
         |-----------------------------------------------------------------------------------------------|
@@ -225,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_1,    KC_2,    KC_3,    KC_DLR, KC_ASTR, KC_SLSH, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, KC_4,    KC_5,    KC_6,    KC_DOT, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, _______,
         _______, KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS, KC_UNDS, KC_LPRN, KC_RPRN, KC_LABK, KC_RABK, _______,
-        _______, _______, _______, _______, LOWER2, _______, _______, RAISE1,  _______, _______, _______, _______
+        _______, _______, _______, _______, LOWER2, _______, _______, ADJUST,  _______, _______, _______, _______
     ),
 
         /* Raise I - symbols and movement
@@ -248,7 +208,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______,
         _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, KC_PLUS, KC_EQL,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
         _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_MINS, KC_UNDS, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
-        _______, _______, _______, _______, LOWER1,  _______, _______, RAISE2,  _______, _______, _______,  _______
+        _______, _______, _______, _______, ADJUST,  _______, _______, RAISE2,  _______, _______, _______,  _______
     ),
 
     // IDEA: merge RAISE II and LOWER II
@@ -293,6 +253,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, KC_ACL1, KC_ACL2, _______,
         _______, _______, _______, _______, LOWER1,  _______, _______, XXXXXXX, _______, _______, _______, _______
+    ),
+
+    /* Hyper - function keys
+
+        |-----------------------------------------------------------------------------------------------|
+        | ADJUST|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       | Reset |
+        |-----------------------------------------------------------------------------------------------|
+
+    */
+    [_HYPER] = LAYOUT_planck_grid(
+        ADJUST, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, RESET
+    ),
+
+    /* Adjust - rotary encoder modes and keyboard adjustments
+
+        |-----------------------------------------------------------------------------------------------|
+        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |       |       |       |  xXx  |      BASE     |  xXx  |       |       |       |       |
+        |-----------------------------------------------------------------------------------------------|
+
+    */
+    [_ADJUST] = LAYOUT_planck_grid(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
+        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
+        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
 };
@@ -349,38 +349,38 @@ void dynamic_macro_play_user(int8_t direction) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     // play layer activation audio
-    #ifdef AUDIO_ENABLE
-    switch (get_highest_layer(state)) {
-        case _BASE:
-            // enabling base layer song breaks other songs 
-            // which also play when returning to base layer including:
-            // - rotary feedback songs
-            // - macro recording start song
+    // #ifdef AUDIO_ENABLE
+    // switch (get_highest_layer(state)) {
+    //     case _BASE:
+    //         // enabling base layer song breaks other songs 
+    //         // which also play when returning to base layer including:
+    //         // - rotary feedback songs
+    //         // - macro recording start song
             
-            // PLAY_SONG(base_song);
-            break;
-        case _HYPER:
-            PLAY_SONG(hyper_song);
-            break;
-        case _ROTOR:
-            PLAY_SONG(rotary_song);
-            break;
-        case _LOWER1:
-            PLAY_SONG(lower1_song);
-            break;
-        case _LOWER2:
-            PLAY_SONG(lower2_song);
-            break;
-        case _RAISE1:
-            PLAY_SONG(raise1_song);
-            break;
-        case _RAISE2:
-            PLAY_SONG(raise2_song);
-            break;
-        default:
-            break;
-    }
-    #endif
+    //         PLAY_SONG(base_song);
+    //         break;
+    //     case _HYPER:
+    //         PLAY_SONG(hyper_song);
+    //         break;
+    //     case _ADJUST:
+    //         PLAY_SONG(adjust_song);
+    //         break;
+    //     case _LOWER1:
+    //         PLAY_SONG(lower1_song);
+    //         break;
+    //     case _LOWER2:
+    //         PLAY_SONG(lower2_song);
+    //         break;
+    //     case _RAISE1:
+    //         PLAY_SONG(raise1_song);
+    //         break;
+    //     case _RAISE2:
+    //         PLAY_SONG(raise2_song);
+    //         break;
+    //     default:
+    //         break;
+    // }
+    // #endif
 
     return state;
 }
@@ -515,6 +515,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #ifdef AUDIO_ENABLE
     if (record->event.pressed) {
         switch (keycode) {
+            case KC_CAPS:
+                if (caps_active) {
+                    PLAY_SONG(caps_on_song);
+                }
+                else {
+                    PLAY_SONG(caps_off_song);
+                }
+                break;
+
+            // layer keys
+
+            case BASE:
+                PLAY_SONG(base_song);
+                break;
+            case HYPER:
+                PLAY_SONG(hyper_song);
+                break;
+            case ADJUST:
+                PLAY_SONG(adjust_song);
+                break;
+            case LOWER1:
+                PLAY_SONG(lower1_song);
+                break;
+            case LOWER2:
+                PLAY_SONG(lower2_song);
+                break;
+            case RAISE1:
+                PLAY_SONG(raise1_song);
+                break;
+            case RAISE2:
+                PLAY_SONG(raise2_song);
+                break;
+
+            // shortcuts
+
             case KC_S: // CTRL+S
                 if (CTL_MASK) {
                     PLAY_SONG(save_song);
@@ -545,14 +580,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     PLAY_SONG(redo_song);
                 }
                 break;
-            case KC_CAPS:
-                if (caps_active) {
-                    PLAY_SONG(caps_on_song);
-                }
-                else {
-                    PLAY_SONG(caps_off_song);
-                }
-                break;
 
             // rotary encoder
 
@@ -567,7 +594,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 break;
 
             default:
-                if (IS_LAYER_ON(_ROTOR)) {
+                if (IS_LAYER_ON(_ADJUST)) {
                     PLAY_SONG(reject_song);
                 }
         };
