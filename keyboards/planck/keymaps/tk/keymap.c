@@ -117,14 +117,14 @@ float lower1_song[][2]          = SONG(MARIO_POWERUP_BLOCK);
 float lower2_song[][2]          = SONG(MARIO_POWERUP);
 
 // shortcut songs
-float caps_on_song[][2]         = SONG(MARIO_CAVE_1);
-float caps_off_song[][2]        = SONG(MARIO_CAVE_2);
+float caps_on_song[][2]         = SONG(MARIO_ONEUP);
+float caps_off_song[][2]        = SONG(MARIO_ONEUP);
 float save_song[][2]            = SONG(MARIO_COIN);
 float cut_song[][2]             = SONG(MARIO_STOMP);
 float copy_song[][2]            = SONG(MARIO_STOMP);
 float paste_song[][2]           = SONG(MARIO_FIREBALL);
 float undo_song[][2]            = SONG(MARIO_KICK);
-float redo_song[][2]            = SONG(MARIO_ONEUP);
+float redo_song[][2]            = SONG(MARIO_KICK);
 #endif
 
 
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER |  Caps |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM Stop| HYPER |
+        | HYPER |       |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * TAB:              CTRL on hold
@@ -161,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-        HYPER,   KC_CAPS, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
+        HYPER,   _______, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
     ),
 
     /* Lower I - numbers and brackets
@@ -173,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   7   |   8   |   9   |   0   |   -   |   _   |   (   |   )   |   <   |   >   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER2|               | RAISE1|       |       |       |       |
+        |       |       |       |       | LOWER2|               | ADJUST|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * The following symbols are found on other layers: $ * /
@@ -197,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   &   |   *   |   (   |   )   |   -   |   _   |   ~   |   `   |   |   |   \   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER1|               | RAISE2|       |       |       |       |
+        |       |       |       |       | ADJUST|               | RAISE2|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * It is not recomended to use the (  ) symbols on this layer
@@ -255,24 +255,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, LOWER1,  _______, _______, XXXXXXX, _______, _______, _______, _______
     ),
 
-    /* Hyper - function keys
+    /* Hyper - function and special keys
 
         |-----------------------------------------------------------------------------------------------|
-        | ADJUST|  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
+        |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|       | Reset |
+        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|  Caps | Reset |
         |-----------------------------------------------------------------------------------------------|
 
     */
     [_HYPER] = LAYOUT_planck_grid(
-        ADJUST, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, _______, RESET
+        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, KC_CAPS, RESET
     ),
 
     /* Adjust - rotary encoder modes and keyboard adjustments
