@@ -272,7 +272,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Reset |  Wake | Sleep |PrntScr| Reset |      BASE     | Reset | D1 Rec| D2 Rec|       | Reset |
+        | Sleep |PrntScr|       |       |  Wake |      BASE     | Reset | D1 Rec| D2 Rec|       | Sleep |
         |-----------------------------------------------------------------------------------------------|
 
     */
@@ -280,7 +280,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
-        KC_SLEP, _______, _______, _______, RESET,   BASE,    BASE,    RESET,   DM_REC1, DM_REC2, KC_PSCR, KC_SLEP
+        KC_SLEP, KC_PSCR, _______, _______, KC_WAKE, BASE,    BASE,    RESET,   DM_REC1, DM_REC2, _______, KC_SLEP
     ),
 
     /* Adjust - rotary encoder modes and keyboard adjustments
