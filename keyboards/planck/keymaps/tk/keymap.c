@@ -76,18 +76,19 @@ enum encoder_states rotary_state = E_VOLUME;
 
 enum keycodes {
     ROTARY = SAFE_RANGE,
+    CTRL_SH,    // CTRL + SH
     
     // rotary state selection
     R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
 
     // command-line macros
-    K_CLEAR,    // [delete line]
-    K_EMAIL,    // [email address]
-    K_PHONE,    // [phone number]
-    K_CMT,      // git commit -m ''
-    K_SHBNG,    // #!/usr/bin/env 
-    K_CHMOD,    // chmod 744 *sh 
-    K_VENV,     // source *env*/bin/activate
+    M_CLEAR,    // [delete line]
+    M_EMAIL,    // [email address]
+    M_PHONE,    // [phone number]
+    M_CMT,      // git commit -m ''
+    M_SHBNG,    // #!/usr/bin/env 
+    M_CHMOD,    // chmod 744 *sh 
+    M_VENV,     // source *env*/bin/activate
 };
 
 #define BASE   TO(_BASE)
@@ -158,11 +159,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER |       |  Meta | Super | LOWER1|     Space     | RAISE1|DM1 Ply|DM2 Ply|DM Stop| HYPER |
+        | HYPER | CtlSh |  Meta | Super | LOWER1|     Space     | RAISE1|D1 Play|D2 Play| D Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
-        * TAB:              CTRL on hold
-        * ESC and ':        SHIFT on hold
+        * Tab:      CTRL on hold
+        * Esc:      SHIFT on hold 
 
     */
 
@@ -170,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-        HYPER,   _______, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
+        HYPER,   CTRL_SH, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
     ),
 
     /* Lower I - numbers and brackets
@@ -236,9 +237,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER2] = LAYOUT_planck_grid(
-        _______, XXXXXXX, XXXXXXX, K_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, K_PHONE, K_CLEAR,
-        _______, XXXXXXX, K_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, K_CHMOD, XXXXXXX, K_CMT,   K_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, M_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_PHONE, M_CLEAR,
+        _______, XXXXXXX, M_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
@@ -269,17 +270,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Reset |  Wake | Sleep |PrntScr|  xXx  |      BASE     |  xXx  |DM1 Rec|DM2 Rec|  Caps | Reset |
+        | Reset |  Wake | Sleep |PrntScr| Reset |      BASE     | Reset | D1 Rec| D2 Rec|       | Reset |
         |-----------------------------------------------------------------------------------------------|
 
     */
     [_HYPER] = LAYOUT_planck_grid(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
-        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        RESET,   KC_WAKE, KC_SLEP, KC_PSCR, XXXXXXX, BASE,    BASE,    XXXXXXX, DM_REC1, DM_REC2, KC_CAPS, RESET
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
+        KC_SLEP, _______, _______, _______, RESET,   BASE,    BASE,    RESET,   DM_REC1, DM_REC2, KC_PSCR, KC_SLEP
     ),
 
     /* Adjust - rotary encoder modes and keyboard adjustments
@@ -413,7 +414,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
-        // rotary encoder
+        case CTRL_SH:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                register_code(KC_LSFT);
+            }
+            else {
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LCTL);
+            }
+            break;
+
+        // rotary encoder state selection
 
         case R_VOL:
             if (record->event.pressed) {
@@ -472,39 +484,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         ██      ██ ██   ██  ██████ ██   ██  ██████  ███████
         */
 
-        case K_CLEAR:
+        case M_CLEAR:
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_E)); // go to start of line
                 tap_code16(LCTL(KC_U)); // clear to beginning of line
             }
             break;
-        case K_EMAIL:
+        case M_EMAIL:
             if (record->event.pressed) {
                 SEND_STRING(EMAIL);
             }
             break;
-        case K_PHONE:
+        case M_PHONE:
             if (record->event.pressed) {
                 SEND_STRING(PHONE);
             }
             break;
-        case K_SHBNG:
+        case M_SHBNG:
             if (record->event.pressed) {
                 SEND_STRING("#!/usr/bin/env ");
             }
             break;
-        case K_CHMOD:
+        case M_CHMOD:
             if (record->event.pressed) {
                 SEND_STRING("chmod 744 *.sh ");
             }
             break;
-        case K_CMT:
+        case M_CMT:
             if (record->event.pressed) {
                 SEND_STRING("git commit -m ''");
                 tap_code(KC_LEFT);
             }
             break;
-        case K_VENV:
+        case M_VENV:
             if (record->event.pressed) {
                 SEND_STRING("source *env*/bin/activate");
             }
