@@ -58,6 +58,38 @@ enum planck_layers {
     _ADJUST,
 };
 
+// Rotary encoder states
+
+enum encoder_states {
+    E_VOLUME,     // volume up/down, toggle mute
+    E_MEDIA,      // media next/previous, play/pause
+    E_BRIGHTNESS, // brightness up/down
+    E_SCROLL_V,   // scroll up/down, middle click
+    E_SCROLL_H,   // scroll right/left, middle click
+    E_ARROW_V,    // arrow up/down
+    E_ARROW_H,    // arrow left/right
+};
+
+enum encoder_states rotary_state = E_VOLUME;
+
+// Custom keycodes
+
+enum keycodes {
+    ROTARY = SAFE_RANGE,
+    
+    // rotary state selection
+    R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
+
+    // command-line macros
+    K_CLEAR,    // [delete line]
+    K_EMAIL,    // [email address]
+    K_PHONE,    // [phone number]
+    K_CMT,      // git commit -m ''
+    K_SHBNG,    // #!/usr/bin/env 
+    K_CHMOD,    // chmod 744 *sh 
+    K_VENV,     // source *env*/bin/activate
+};
+
 #define BASE   TO(_BASE)
 #define HYPER  MO(_HYPER)
 #define ADJUST MO(_ADJUST)
@@ -68,40 +100,9 @@ enum planck_layers {
 #define RAISE1  OSL(_RAISE1)
 #define RAISE2  OSL(_RAISE2)
 
-// Custom keycodes
-
+// mod taps
 #define CTL_TAB MT(MOD_LCTL, KC_TAB)
 #define SH_ESC  MT(MOD_LSFT, KC_ESC)
-
-enum keycodes {
-    ROTARY = SAFE_RANGE,
-
-    // rotary modes
-    R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
-
-    // command-line macros
-    M_CLEAR,    // [delete line]
-    M_EMAIL,    // [email address]
-    M_PHONE,    // [phone number]
-    M_CMT,      // git commit -m ''
-    M_SHBNG,    // #!/usr/bin/env 
-    M_CHMOD,    // chmod 744 *sh 
-    M_VENV,     // source *env*/bin/activate
-};
-
-// Rotary encoder states
-
-enum encoder_states {
-    VOLUME,     // volume up/down, toggle mute
-    MEDIA,      // media next/previous, play/pause
-    BRIGHTNESS, // brightness up/down
-    SCROLL_V,   // scroll up/down, middle click
-    SCROLL_H,   // scroll right/left, middle click
-    ARROW_V,    // arrow up/down
-    ARROW_H,    // arrow left/right
-};
-
-enum encoder_states rotary_state = VOLUME;
 
 // Songs
 
@@ -235,9 +236,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER2] = LAYOUT_planck_grid(
-        _______, XXXXXXX, XXXXXXX, M_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_PHONE, M_CLEAR,
-        _______, XXXXXXX, M_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, K_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, K_PHONE, K_CLEAR,
+        _______, XXXXXXX, K_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, K_CHMOD, XXXXXXX, K_CMT,   K_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
@@ -416,48 +417,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case R_VOL:
             if (record->event.pressed) {
-                rotary_state = VOLUME;
+                rotary_state = E_VOLUME;
             }
             break;
         case R_MEDIA:
             if (record->event.pressed) {
-                rotary_state = MEDIA;
+                rotary_state = E_MEDIA;
             }
             break;
         case R_BRI:
             if (record->event.pressed) {
-                rotary_state = BRIGHTNESS;
+                rotary_state = E_BRIGHTNESS;
             }
             break;
         case R_SC_V:
             if (record->event.pressed) {
-                rotary_state = SCROLL_V;
+                rotary_state = E_SCROLL_V;
             }
             break;
         case R_SC_H:
             if (record->event.pressed) {
-                rotary_state = SCROLL_H;
+                rotary_state = E_SCROLL_H;
             }
             break;
         case R_AR_V:
             if (record->event.pressed) {
-                rotary_state = ARROW_V;
+                rotary_state = E_ARROW_V;
             }
             break;
         case R_AR_H:
             if (record->event.pressed) {
-                rotary_state = ARROW_H;
+                rotary_state = E_ARROW_H;
             }
             break;
         case ROTARY:
             if (record->event.pressed) {
-                if (rotary_state == VOLUME) {
+                if (rotary_state == E_VOLUME) {
                     tap_code(KC_MUTE);  // toggle mute
                 }
-                else if (rotary_state == MEDIA) {
+                else if (rotary_state == E_MEDIA) {
                     tap_code(KC_MPLY);  // play/pause media
                 }
-                else if (rotary_state == SCROLL_V || rotary_state == SCROLL_H) {
+                else if (rotary_state == E_SCROLL_V || rotary_state == E_SCROLL_H) {
                     tap_code(KC_BTN3);  // middle mouse button
                 }
             }
@@ -471,39 +472,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         ██      ██ ██   ██  ██████ ██   ██  ██████  ███████
         */
 
-        case M_CLEAR:
+        case K_CLEAR:
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_E)); // go to start of line
                 tap_code16(LCTL(KC_U)); // clear to beginning of line
             }
             break;
-        case M_EMAIL:
+        case K_EMAIL:
             if (record->event.pressed) {
                 SEND_STRING(EMAIL);
             }
             break;
-        case M_PHONE:
+        case K_PHONE:
             if (record->event.pressed) {
                 SEND_STRING(PHONE);
             }
             break;
-        case M_SHBNG:
+        case K_SHBNG:
             if (record->event.pressed) {
                 SEND_STRING("#!/usr/bin/env ");
             }
             break;
-        case M_CHMOD:
+        case K_CHMOD:
             if (record->event.pressed) {
                 SEND_STRING("chmod 744 *.sh ");
             }
             break;
-        case M_CMT:
+        case K_CMT:
             if (record->event.pressed) {
                 SEND_STRING("git commit -m ''");
                 tap_code(KC_LEFT);
             }
             break;
-        case M_VENV:
+        case K_VENV:
             if (record->event.pressed) {
                 SEND_STRING("source *env*/bin/activate");
             }
@@ -630,7 +631,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     static int scroll_interval = 5;
 
     switch (rotary_state) {
-        case VOLUME:
+        case E_VOLUME:
             if (clockwise) {
                 tap_code(KC_VOLU);
             }
@@ -638,7 +639,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_VOLD);
             }
             break;
-        case MEDIA:
+        case E_MEDIA:
             if (clockwise) {
                 tap_code(KC_MNXT);
             }
@@ -646,7 +647,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_MPRV);
             }
             break;
-        case BRIGHTNESS:
+        case E_BRIGHTNESS:
             if (clockwise) {
                 tap_code(KC_BRIU);
             }
@@ -654,7 +655,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_BRID);
             }
             break;
-        case SCROLL_V:
+        case E_SCROLL_V:
             if (clockwise) {
                 // tap_code(KC_PGDN);
                 for (int i=0; i<scroll_interval; i++) {
@@ -668,7 +669,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 }
             }
             break;
-        case SCROLL_H:
+        case E_SCROLL_H:
             if (clockwise) {
                 for (int i=0; i<scroll_interval; i++) {
                     tap_code(KC_WH_R);
@@ -680,7 +681,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 }
             }
             break;
-        case ARROW_V:
+        case E_ARROW_V:
             if (clockwise) {
                 tap_code(KC_DOWN);
             }
@@ -688,7 +689,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_UP);
             }
             break;
-        case ARROW_H:
+        case E_ARROW_H:
             if (clockwise) {
                 tap_code(KC_RIGHT);
             }
