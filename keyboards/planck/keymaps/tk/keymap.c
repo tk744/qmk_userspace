@@ -27,6 +27,14 @@
     ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 */
 
+// Secret macros
+
+#if !defined(EMAIL) || !defined(PHONE)
+#define EMAIL ""
+#define PHONE ""
+#endif
+
+// Mod masks
 
 #define LCTL_MASK (get_mods() & MOD_BIT(KC_LCTL))
 #define RCTL_MASK (get_mods() & MOD_BIT(KC_RCTL))
@@ -72,13 +80,13 @@ enum keycodes {
     R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
 
     // command-line macros
-    DEL_LN,     // [delete line]
-    EMAIL,      // [email address]
-    PHONE,      // [phone number]
-    GT_CMT,     // git commit -m ''
-    SHEBANG,    // #!/usr/bin/env 
-    CHMOD,      // chmod 744 *sh 
-    PY_VENV,    // source *env*/bin/activate
+    M_CLEAR,    // [delete line]
+    M_EMAIL,    // [email address]
+    M_PHONE,    // [phone number]
+    M_CMT,      // git commit -m ''
+    M_SHBNG,    // #!/usr/bin/env 
+    M_CHMOD,    // chmod 744 *sh 
+    M_VENV,     // source *env*/bin/activate
 };
 
 // Rotary encoder states
@@ -211,16 +219,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, ADJUST,  _______, _______, RAISE2,  _______, _______, _______,  _______
     ),
 
-    // IDEA: merge RAISE II and LOWER II
-
     /* Lower II - macros
 
         |-----------------------------------------------------------------------------------------------|
-        |       |       |       | email |       |       |       |       |       |       | phone | del ln|
+        |       |       |       |[email]|       |       |       |       |       |       |[phone]|[clear]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       | g stat|       |       |       |       |       |       |       |       |       |
+        |       |       |shebang|       |       |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       | chmod |       | g cmt |py venv|       |       |       |       |       |       |       |
+        |       | chmod |       | commit|  venv |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -229,9 +235,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER2] = LAYOUT_planck_grid(
-        _______, XXXXXXX, XXXXXXX, EMAIL,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, PHONE,   DEL_LN,
-        _______, XXXXXXX, SHEBANG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, CHMOD,   XXXXXXX, GT_CMT,  PY_VENV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, M_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_PHONE, M_CLEAR,
+        _______, XXXXXXX, M_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
     ),
 
@@ -465,39 +471,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         ██      ██ ██   ██  ██████ ██   ██  ██████  ███████
         */
 
-        case DEL_LN:
+        case M_CLEAR:
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_E)); // go to start of line
                 tap_code16(LCTL(KC_U)); // clear to beginning of line
             }
             break;
-        case EMAIL:
+        case M_EMAIL:
             if (record->event.pressed) {
-                SEND_STRING("email macro not set");
+                SEND_STRING(EMAIL);
             }
             break;
-        case PHONE:
+        case M_PHONE:
             if (record->event.pressed) {
-                SEND_STRING("phone macro not set");
+                SEND_STRING(PHONE);
             }
             break;
-        case SHEBANG:
+        case M_SHBNG:
             if (record->event.pressed) {
                 SEND_STRING("#!/usr/bin/env ");
             }
             break;
-        case CHMOD:
+        case M_CHMOD:
             if (record->event.pressed) {
                 SEND_STRING("chmod 744 *.sh ");
             }
             break;
-        case GT_CMT:
+        case M_CMT:
             if (record->event.pressed) {
                 SEND_STRING("git commit -m ''");
                 tap_code(KC_LEFT);
             }
             break;
-        case PY_VENV:
+        case M_VENV:
             if (record->event.pressed) {
                 SEND_STRING("source *env*/bin/activate");
             }
