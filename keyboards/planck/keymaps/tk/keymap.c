@@ -159,11 +159,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER | CtlSh |  Meta | Super | LOWER1|     Space     | RAISE1|D1 Play|D2 Play| D Stop| HYPER |
+        | HYPER |PrntScr|  Meta | CtlSh | LOWER1| Super | Space | RAISE1|D1 Play|D2 Play| D Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * Tab:      CTRL on hold
-        * Esc:      SHIFT on hold 
+        * Esc:      SHIFT on hold
 
     */
 
@@ -171,7 +171,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-        HYPER,   CTRL_SH, KC_LALT, KC_LGUI, LOWER1, KC_SPACE, KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
+        HYPER,   KC_PSCR, KC_LALT, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
+    ),
+
+    /* Hyper - function and special keys
+
+        |-----------------------------------------------------------------------------------------------|
+        |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        | Reset |       |       |       | Sleep |  BASE |  BASE | Sleep | D1 Rec| D2 Rec| D Stop| Reset |
+        |-----------------------------------------------------------------------------------------------|
+
+    */
+    [_HYPER] = LAYOUT_planck_grid(
+        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
+        RESET,   _______, _______, _______, KC_SLEP,   BASE,    BASE,  KC_SLEP, DM_REC1, DM_REC2, DM_RSTP, RESET
+    ),
+
+    /* Adjust - rotary encoder modes and keyboard adjustments
+
+        |-----------------------------------------------------------------------------------------------|
+        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |       |       |       |  xXx  |  BASE |  BASE |  xXx  |       |       |       |       |
+        |-----------------------------------------------------------------------------------------------|
+
+    */
+    [_ADJUST] = LAYOUT_planck_grid(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
+        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
+        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
     /* Lower I - numbers and brackets
@@ -183,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   7   |   8   |   9   |   0   |   -   |   _   |   (   |   )   |   <   |   >   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER2|               | ADJUST|       |       |       |       |
+        |       |       |       |       | LOWER2|       |       | ADJUST|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * The following symbols are found on other layers: $ * /
@@ -207,7 +247,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   &   |   *   |   (   |   )   |   -   |   _   |   ~   |   `   |   |   |   \   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | ADJUST|               | RAISE2|       |       |       |       |
+        |       |       |       |       | ADJUST|       |       | RAISE2|       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * It is not recomended to use the (  ) symbols on this layer
@@ -230,7 +270,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       | chmod |       | commit|  venv |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |               | RAISE1|       |       |       |       |
+        |       |       |       |       |  BASE |       |       |  xXx  |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
         * DO NOT INCLUDE DESTRUCTIVE MACROS
@@ -240,7 +280,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, M_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_PHONE, M_CLEAR,
         _______, XXXXXXX, M_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, _______, _______, _______, XXXXXXX, _______, _______, RAISE1,  _______, _______, _______, _______
+        _______, _______, _______, _______, BASE,    _______, _______, XXXXXXX, _______, _______, _______, _______
     ),
 
     /* Raise II - mouse navigation
@@ -252,7 +292,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |       |       |       | L Ck  | R ck  | Slow  | Fast  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       | LOWER1|               |  xXx  |       |       |       |       |
+        |       |       |       |       |  xXx  |       |       |  BASE |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
 
     */
@@ -260,47 +300,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, KC_ACL1, KC_ACL2, _______,
-        _______, _______, _______, _______, LOWER1,  _______, _______, XXXXXXX, _______, _______, _______, _______
-    ),
-
-    /* Hyper - function and special keys
-
-        |-----------------------------------------------------------------------------------------------|
-        |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Sleep |PrntScr|       |       |  Wake |      BASE     | Reset | D1 Rec| D2 Rec|       | Sleep |
-        |-----------------------------------------------------------------------------------------------|
-
-    */
-    [_HYPER] = LAYOUT_planck_grid(
-        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
-        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
-        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
-        KC_SLEP, KC_PSCR, _______, _______, KC_WAKE, BASE,    BASE,    RESET,   DM_REC1, DM_REC2, _______, KC_SLEP
-    ),
-
-    /* Adjust - rotary encoder modes and keyboard adjustments
-
-        |-----------------------------------------------------------------------------------------------|
-        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
-        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |      BASE     |  xXx  |       |       |       |       |
-        |-----------------------------------------------------------------------------------------------|
-
-    */
-    [_ADJUST] = LAYOUT_planck_grid(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
-        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
-        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        _______, _______, _______, _______, XXXXXXX, _______, _______, BASE,    _______, _______, _______, _______
     ),
 
 };
