@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER |PrntScr|  Meta | CtlSh | LOWER1| Super | Space | RAISE1|D1 Play|D2 Play| D Stop| HYPER |
+        | HYPER | CtlSh |  Meta |PrntScr| LOWER1| Super | Space | RAISE1|D1 Play|D2 Play| D Stop| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * Tab:      CTRL on hold
@@ -171,13 +171,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-        HYPER,   KC_PSCR, KC_LALT, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, DM_PLY1, DM_PLY2, DM_RSTP, HYPER
+        HYPER,   CTRL_SH, KC_LALT, KC_PSCR, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, KC_DEL,  DM_PLY1, DM_PLY2, HYPER
     ),
 
     /* Hyper - function and special keys
 
         |-----------------------------------------------------------------------------------------------|
-        |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  | Delete|
+        |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -188,10 +188,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_HYPER] = LAYOUT_planck_grid(
-        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
-        RESET,   _______, _______, _______, KC_SLEP,   BASE,    BASE,  KC_SLEP, DM_REC1, DM_REC2, DM_RSTP, RESET
+        RESET,   _______, _______, _______, KC_SLEP,   BASE,    BASE,  KC_SLEP, DM_RSTP, DM_REC1, DM_REC2, RESET
     ),
 
     /* Adjust - rotary encoder modes and keyboard adjustments
@@ -214,10 +214,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
-    /* Lower I - numbers and brackets
+    /* Lower 1 - numbers and brackets
 
         |-----------------------------------------------------------------------------------------------|
-        |       |   1   |   2   |   3   |   $   |   *   |   /   |       |       |       |       |       |
+        |       |   1   |   2   |   3   |   $   |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   4   |   5   |   6   |   .   |   +   |   =   |   [   |   ]   |   {   |   }   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -232,13 +232,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER1] = LAYOUT_planck_grid(
-        _______, KC_1,    KC_2,    KC_3,    KC_DLR, KC_ASTR, KC_SLSH, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, KC_1,    KC_2,    KC_3,    KC_DLR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, KC_4,    KC_5,    KC_6,    KC_DOT, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, _______,
         _______, KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS, KC_UNDS, KC_LPRN, KC_RPRN, KC_LABK, KC_RABK, _______,
         _______, _______, _______, _______, LOWER2, _______, _______, ADJUST,  _______, _______, _______, _______
     ),
 
-        /* Raise I - symbols and movement
+    /* Raise 1 - symbols and movement
 
         |-----------------------------------------------------------------------------------------------|
         |       |   !   |   @   |   #   |       |       |       | Home  | Pg Dn | Pg Up |  End  |       |
@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, ADJUST,  _______, _______, RAISE2,  _______, _______, _______,  _______
     ),
 
-    /* Lower II - macros
+    /* Lower 2 - macros
 
         |-----------------------------------------------------------------------------------------------|
         |       |       |       |[email]|       |       |       |       |       |       |[phone]|[clear]|
@@ -283,7 +283,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, BASE,    _______, _______, XXXXXXX, _______, _______, _______, _______
     ),
 
-    /* Raise II - mouse navigation
+    /* Raise 2 - mouse navigation
 
         |-----------------------------------------------------------------------------------------------|
         |       |       |       |       |       |       |       | S lt  | S up  | S dn  | S rt  |       |
