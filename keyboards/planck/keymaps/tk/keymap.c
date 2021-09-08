@@ -29,7 +29,8 @@
 
 // Secret macros
 
-#if !defined(EMAIL) || !defined(PHONE)
+#if !defined(NAME) || !defined(EMAIL) || !defined(PHONE)
+#define NAME ""
 #define EMAIL ""
 #define PHONE ""
 #endif
@@ -81,8 +82,9 @@ enum keycodes {
     // rotary state selection
     R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
 
-    // command-line macros
+    // static macros
     M_CLEAR,    // [delete line]
+    M_NAME,     // [full name]
     M_EMAIL,    // [email address]
     M_PHONE,    // [phone number]
     M_CMT,      // git commit -m ''
@@ -159,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER | CtlSh |  Meta |PrntScr| LOWER1| Super | Space | RAISE1|  Del  |D1 Play|D2 Play| HYPER |
+        | HYPER |PrntScr|  Meta | CtlSh | LOWER1| Super | Space | RAISE1|  Del  |D1 Play|D2 Play| HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * Tab:      CTRL on hold
@@ -217,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Lower 1 - numbers and brackets
 
         |-----------------------------------------------------------------------------------------------|
-        |       |   1   |   2   |   3   |   $   |       |       |       |       |       |       |       |
+        |       |   1   |   2   |   3   |   $   |   *   |   /   |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   4   |   5   |   6   |   .   |   +   |   =   |   [   |   ]   |   {   |   }   |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -232,7 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_LOWER1] = LAYOUT_planck_grid(
-        _______, KC_1,    KC_2,    KC_3,    KC_DLR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, KC_1,    KC_2,    KC_3,    KC_DLR, KC_ASTR, KC_SLSH, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, KC_4,    KC_5,    KC_6,    KC_DOT, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, _______,
         _______, KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS, KC_UNDS, KC_LPRN, KC_RPRN, KC_LABK, KC_RABK, _______,
         _______, _______, _______, _______, LOWER2, _______, _______, ADJUST,  _______, _______, _______, _______
@@ -241,7 +243,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Raise 1 - symbols and movement
 
         |-----------------------------------------------------------------------------------------------|
-        |       |   !   |   @   |   #   |       |       |       | Home  | Pg Dn | Pg Up |  End  |       |
+        |       |   !   |   @   |   #   |       |   *   |   /   | Home  | Pg Dn | Pg Up |  End  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |   $   |   %   |   ^   |       |   +   |   =   | Left  | Down  |  Up   | Right |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -255,7 +257,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_RAISE1] = LAYOUT_planck_grid(
-        _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+        _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, KC_ASTR, KC_SLSH, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
         _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, KC_PLUS, KC_EQL,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
         _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_MINS, KC_UNDS, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
         _______, _______, _______, _______, ADJUST,  _______, _______, RAISE2,  _______, _______, _______,  _______
@@ -268,7 +270,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |shebang|       |       |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       | chmod |       | commit|  venv |       |       |       |       |       |       |       |
+        |       | chmod |       | commit|  venv |       | [name]|       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       |  BASE |       |       |  xXx  |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -279,7 +281,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER2] = LAYOUT_planck_grid(
         _______, XXXXXXX, XXXXXXX, M_EMAIL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, M_PHONE, M_CLEAR,
         _______, XXXXXXX, M_SHBNG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, M_CHMOD, XXXXXXX, M_CMT,   M_VENV,  XXXXXXX, M_NAME,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         _______, _______, _______, _______, BASE,    _______, _______, XXXXXXX, _______, _______, _______, _______
     ),
 
@@ -488,6 +490,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_E)); // go to start of line
                 tap_code16(LCTL(KC_U)); // clear to beginning of line
+            }
+            break;
+        case M_NAME:
+            if (record->event.pressed) {
+                SEND_STRING(NAME);
             }
             break;
         case M_EMAIL:
