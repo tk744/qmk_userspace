@@ -514,7 +514,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_CHMOD:
             if (record->event.pressed) {
-                SEND_STRING("chmod 744 *.sh ");
+                SEND_STRING("chmod 744 ");
             }
             break;
         case M_CMT:
