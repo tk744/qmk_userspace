@@ -89,7 +89,7 @@ enum keycodes {
     M_PHONE,    // [phone number]
     M_CMT,      // git commit -m ''
     M_SHBNG,    // #!/usr/bin/env 
-    M_CHMOD,    // chmod 744 *sh 
+    M_CHMOD,    // chmod 744
     M_VENV,     // source *env*/bin/activate
 };
 
@@ -176,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         HYPER,   _______, KC_LALT, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, KC_DEL,  DM_PLY1, DM_PLY2, HYPER
     ),
 
-    /* Hyper - function keys, system keys (power, lock, sleep, sc), dynamic macros
+    /* Hyper - function keys, dynamic macros
 
         |-----------------------------------------------------------------------------------------------|
         |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |       |
@@ -185,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         | Caps  |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Reset |       |       |PrntScr| Sleep |  BASE |  BASE | Sleep | D1 Rec| D2 Rec| D Save| Reset |
+        |       |       |       |PrntScr|       |  BASE |  BASE |       | D1 Rec| D2 Rec| D Save|       |
         |-----------------------------------------------------------------------------------------------|
 
     */
@@ -193,27 +193,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         KC_CAPS, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
-        RESET,   _______, _______, KC_PSCR, KC_SLEP,   BASE,    BASE,  KC_SLEP, DM_REC1, DM_REC2, DM_RSTP, RESET
+        _______, _______, _______, KC_PSCR, _______,   BASE,    BASE,  _______, DM_REC1, DM_REC2, DM_RSTP, _______
     ),
 
-    /* Adjust - rotary encoder modes and keyboard adjustments
+    /* Adjust - rotary encoder modes, keyboard audio settings, system keys (power, sleep, wake),
 
         |-----------------------------------------------------------------------------------------------|
-        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|       |
+        |       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h| Power |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Music|
+        |T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Piano|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Music|
+        |T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Piano|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |       |  xXx  |  BASE |  BASE |  xXx  |       |       |       |       |
+        | Reset |       |       |       |  xXx  |  BASE |  BASE |  xXx  |       |       |       | Reset |
         |-----------------------------------------------------------------------------------------------|
 
     */
     [_ADJUST] = LAYOUT_planck_grid(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  KC_PWR,
         AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
         CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET
     ),
 
     /* Lower 1 - numbers and brackets
@@ -257,7 +257,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_RAISE1] = LAYOUT_planck_grid(
-        _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, KC_ASTR, KC_SLSH, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+        _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, KC_ASTR, KC_SLSH, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______,
         _______, KC_DLR,  KC_PERC, KC_CIRC, XXXXXXX, KC_PLUS, KC_EQL,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
         _______, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_MINS, KC_UNDS, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS,  _______,
         _______, _______, _______, _______, ADJUST,  _______, _______, RAISE2,  _______, _______, _______,  _______
