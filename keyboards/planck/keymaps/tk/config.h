@@ -12,7 +12,7 @@
  * 
  * You should have received a copy of the GNU General Public License 
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
- */ 
+ */
 
 #pragma once
 
@@ -59,3 +59,5 @@
 
 #define AUDIO_CLICKY
 #define AUDIO_CLICKY_FREQ_RANDOMNESS 1
+
+#include "music.h"
