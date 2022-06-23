@@ -269,9 +269,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-----------------------------------------------------------------------------------------------|
         |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |[sleep]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  | [wake]|
+        |[pr_sc]|  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  | [wake]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |[pr_sc]|  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  [off]|
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  [off]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       | xxxxx | [BASE]|[BASE] | xxxxx |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -279,8 +279,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_F] = LAYOUT_planck_grid(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_SLEP,
-        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_WAKE,
-        KC_PSCR, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,
+        KC_PSCR, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_WAKE,
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
@@ -574,7 +574,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 break;
 
-            // rotary encoder
+            // kb layer
 
             case R_VOL:
             case R_MEDIA:
@@ -586,8 +586,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 PLAY_SONG(confirm_song);
                 break;
 
+            case DM_REC1:
+            case DM_REC2:
+            case AU_TOG:
+            case CK_TOGG:
+            case MU_TOG:
+            case MU_MOD:
+            case RESET:
+                break;
+
             default:
-                if (IS_LAYER_ON(_F)) {
+                if (IS_LAYER_ON(_KB)) {
                     PLAY_SONG(reject_song);
                 }
         };
