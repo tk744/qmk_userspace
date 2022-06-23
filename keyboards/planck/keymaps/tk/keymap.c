@@ -1,4 +1,4 @@
-/* Copyright 2020 Tushar Khan
+/* Copyright 2022 Tushar Khan
  * 
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
@@ -358,40 +358,8 @@ void dynamic_macro_play_user(int8_t direction) {
 // Layers
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // play layer activation audio
-    // #ifdef AUDIO_ENABLE
-    // switch (get_highest_layer(state)) {
-    //     case _BASE:
-    //         // enabling base layer song breaks other songs 
-    //         // which also play when returning to base layer including:
-    //         // - rotary feedback songs
-    //         // - macro recording start song
-            
-    //         PLAY_SONG(base_song);
-    //         break;
-    //     case _HYPER:
-    //         PLAY_SONG(hyper_song);
-    //         break;
-    //     case _ADJUST:
-    //         PLAY_SONG(adjust_song);
-    //         break;
-    //     case _LOWER1:
-    //         PLAY_SONG(lower1_song);
-    //         break;
-    //     case _LOWER2:
-    //         PLAY_SONG(lower2_song);
-    //         break;
-    //     case _RAISE1:
-    //         PLAY_SONG(raise1_song);
-    //         break;
-    //     case _RAISE2:
-    //         PLAY_SONG(raise2_song);
-    //         break;
-    //     default:
-    //         break;
-    // }
-    // #endif
-
+    // layer music should not go in here
+    // possibly add LED effects here
     return state;
 }
 
