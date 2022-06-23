@@ -29,6 +29,8 @@
 
 // dynamic macros --
 
+#define DYNAMIC_MACRO_NO_NESTING
+
 // you can store HALF of this number of keypresses in both macros together
 #define DYNAMIC_MACRO_SIZE 256
 
