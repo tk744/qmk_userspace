@@ -1,4 +1,4 @@
-# Plank Keymap v3.1
+# Plank Keymap v3.0
 
 This keymap was designed for programming.
 
@@ -16,7 +16,7 @@ The function of each key is determined by the active keyboard layer. All layers 
 
 Currently there are 7 distinct layers which can be accessed from 3 layer-keys. Those layer-keys include: `LOWER`, `RAISE`, and `FN`. A helpful mnemonic is that `LOWER` is on the **l**eft side, and `RAISE` is on the **r**ight side. The `FN` key occurs on both sides.
 
-By default, the keyboard is in the `BASE` layer. Holding down `FN` activates the `F` layer. Tapping either `LOWER` or `RAISE` activates the `L1` and `R1` layers respectively while the layer-key is held down. Double-tapping either `LOWER` or `RAISE` activates the `L2` and `R2` layers respectively while the layer-key is held down. Holding `LOWER` and `RAISE` down together activates the `ADJUST` layer.
+By default, the keyboard is in the `BASE` layer. Holding down `KB` activates the `KB` layer. Tapping either `LOWER` or `RAISE` activates the `L1` and `R1` layers respectively while the layer-key is held down. Double-tapping either `LOWER` or `RAISE` activates the `L2` and `R2` layers respectively while the layer-key is held down. Holding `LOWER` and `RAISE` down together activates the `F` layer.
 
 ### Considerations
 
@@ -35,29 +35,13 @@ If the layer-key must be tapped once rather than twice, it is easier to access q
 ```
 |-------------------------------------------------------------------------------------------------|
 | [rotary]|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | <[bk]>|
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+---------|
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----|
 |<ct>[tab]|   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   |[enter]|
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+---------|
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----|
 |<sh>[esc]|   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+---------|
-|   <FN>  | [dm1] | <meta>|<ct+sh>|<LOWER>|  <os> |  [_]  |<RAISE>|<[del]>| [caps]| [dm2] | <FN> |
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----|
+|   <KB>  | [dm1] | <meta>|<ct+sh>|  <L1> |  <os> |  [_]  | <R1>  |<[del]>| [caps]| [dm2] | <KB>  |
 |-------------------------------------------------------------------------------------------------|
-```
-
-// TODO
-
-### `F`
-
-```
-|-----------------------------------------------------------------------------------------------|
-|       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |       |
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
-|-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |[dm1 r]|       |       |       | [BASE]|[BASE] |       |       |       |[dm2 r]|       |
-|-----------------------------------------------------------------------------------------------|
 ```
 
 // TODO
@@ -72,7 +56,7 @@ If the layer-key must be tapped once rather than twice, it is easier to access q
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 |       |   7   |   8   |   9   |   0   |   -   |   _   |   (   |   )   |   <   |   >   |       |
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |       |       |       |<LOWER>|       |       |<RAISE>|       |       |       |       |
+|       |       |       |       |  <L2> |       |       |  <F>  |       |       |       |       |
 |-----------------------------------------------------------------------------------------------|   
 ```
 
@@ -90,7 +74,7 @@ On the right-side are all the **bracket** keys placed together in a logical orde
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 |       |   &   |   *   |   (   |   )   |   -   |   _   |   ~   |   `   |   |   |   \   |       |
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |       |       |       |<ADJST>|       |       |<RAISE>|       |       |       |       |
+|       |       |       |       |  <F>  |       |       | <R2>  |       |       |       |       |
 |-----------------------------------------------------------------------------------------------|
 ```
 
@@ -108,7 +92,7 @@ On the left-side is the **shifted-numberpad**, laid over the numberpad in `L1`. 
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 |       |[ch744]|       | [gcmt]| [venv]|       | [name]|       |       |       |       |       |
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |       |       |       | [BASE]|       |       |  xXx  |       |       |       |       |
+|       |       |       |       | [BASE]|       |       | xxxxx |       |       |       |       |
 |-----------------------------------------------------------------------------------------------|
 ```
 
@@ -124,25 +108,40 @@ This layer contains my **static macros**. They are laid over the alphabets in `B
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 |       |       |       |       |       |       |       | L Ck  | R ck  | Slow  | Fast  |       |
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|       |       |       |       |  xXx  |       |       |  BASE |       |       |       |       |
+|       |       |       |       | xxxxx |       |       |[BASE] |       |       |       |       |
 |-----------------------------------------------------------------------------------------------|
 ```
 
-This layer contains mouse-navigation keys on the layer-side.
+// TODO: This layer contains mouse-navigation keys on the layer-side.
 
-
-### `ADJUST`
+### `F`
 
 ```
 |-----------------------------------------------------------------------------------------------|
-|       |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h| Power |
+|       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |[sleep]|
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|T Audio|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|T Piano|
+|       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  | [wake]|
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-|T Click|       |       |       |  vol  | bright|       | media |       |       |       |C Piano|
+|[pr_sc]|  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  [off]|
 |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-| Reset |       |       |       |  xXx  |  BASE |  BASE |  xXx  |       |       |       | Reset |
+|       |       |       |       | xxxxx | [BASE]|[BASE] | xxxxx |       |       |       |       |
 |-----------------------------------------------------------------------------------------------|
 ```
 
-// TODO
+// TODO: function keys, system keys (sleep, wake, power down), print screen
+
+### `KB`
+
+```
+|--------------------------------------------------------------------------------------------------|
+|         |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|        |
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
+|[aud_tog]|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|[pio_tg]|
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
+|[clk_tog]|       |       |       |  vol  | bright|       | media |       |       |       |[mod_tg]|
+|---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
+| [reboot]|[dm1 r]|       |       |       | [BASE]|[BASE] |       |       |       |[dm2 r]|[reboot]|
+|--------------------------------------------------------------------------------------------------|
+```
+
+// TODO: dynamic macros, rotary select, audio settings, reboot
