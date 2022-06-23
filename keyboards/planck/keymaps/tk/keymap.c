@@ -161,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |  Esc  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   |   '   |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | HYPER |       |  Meta | CtlSh | LOWER1| Super | Space | RAISE1|  Del  |D1 Play|D2 Play| HYPER |
+        | HYPER |D1 Play|D2 Play| CtlSh | LOWER1| Super | Space | RAISE1|  Del  |  Meta |  Caps | HYPER |
         |-----------------------------------------------------------------------------------------------|
 
         * Tab:      CTRL on hold
@@ -173,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-        HYPER,   _______, KC_LALT, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, KC_DEL,  DM_PLY1, DM_PLY2, HYPER
+        HYPER,   DM_PLY1, DM_PLY2, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, KC_DEL,  KC_LALT, KC_CAPS, HYPER
     ),
 
     /* Hyper - function keys, dynamic macros
@@ -183,17 +183,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        | Caps  |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  Caps |
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |       |
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |       |       |PrntScr|       |  BASE |  BASE |       | D1 Rec| D2 Rec| D Save|       |
+        |       | D1 Rec| D2 Rec|       |       |  BASE |  BASE |       |       |       |PrntScr|       |
         |-----------------------------------------------------------------------------------------------|
 
     */
     [_HYPER] = LAYOUT_planck_grid(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
-        KC_CAPS, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
-        _______, _______, _______, KC_PSCR, _______,   BASE,    BASE,  _______, DM_REC1, DM_REC2, DM_RSTP, _______
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, DM_REC1, DM_REC2, _______, _______,   BASE,    BASE,  _______, _______, _______, KC_PSCR, _______
     ),
 
     /* Adjust - rotary encoder modes, keyboard audio settings, system keys (power, sleep, wake),
