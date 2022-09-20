@@ -16,6 +16,12 @@
 
 #pragma once
 
+/* tk definitions */
+
+#define KVM_TAP_DELAY 100       // delay between macro keys for KVM hotkeys
+
+/* qmk definitions */
+
 #define ENCODER_RESOLUTION 4    // dependent on rotary encoder
 
 #define TAP_CODE_DELAY 10       // delay between key press and release on `tapcode(kc)`

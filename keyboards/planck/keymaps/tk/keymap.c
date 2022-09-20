@@ -12,7 +12,7 @@
  * 
  * You should have received a copy of the GNU General Public License 
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
- */ 
+ */
 
 #include QMK_KEYBOARD_H
 #include "muse.h"
@@ -76,11 +76,19 @@ enum encoder_states rotary_state = E_VOLUME;
 // Custom keycodes
 
 enum keycodes {
-    ROTARY = SAFE_RANGE,
+    ENCODER = SAFE_RANGE,
     CTRL_SH,    // CTRL + SH
     
     // rotary state selection
     R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
+
+    // kvm macros
+    KVM_PC1,    // show PC 1 on both monitors 
+    KVM_PC2,    // show PC 2 on both monitors
+    KVM_IN,     // if showing both PCs then toggle focus for input
+    KVM_OUT,    // let monitor 1 be the sink: 
+                //      if showing both PCs then swap monitors and focus input on the sink
+                //      if showing one PC then show other PC on the sink and focus input on it
 
     // static macros
     M_CLEAR,    // [delete line]
@@ -155,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base
 
         |-------------------------------------------------------------------------------------------------|
-        | [rotary]|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | <[bk]>|
+        |[encoder]|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | <[bk]>|
         |---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |<ct>[tab]|   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   |[enter]|
         |---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -169,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     */
     [_BASE] = LAYOUT_planck_grid(
-        ROTARY,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
+        ENCODER, KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,     KC_Y,     KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPACE,
         CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,     KC_H,     KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
         SH_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,     KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
         HYPER,   DM_PLY1, KC_LALT, CTRL_SH, LOWER1, KC_LGUI,  KC_SPACE, RAISE1, KC_DEL,  KC_CAPS, DM_PLY2, HYPER
@@ -264,14 +272,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, XXXXXXX, _______, _______, BASE,    _______, _______, _______, _______
     ),
 
-    /* F - function keys, system keys (sleep, wake, power down), print screen
+    /* F - function keys, system keys (sleep, wake, power down), KVM switch hotkeys, print screen
 
         |-----------------------------------------------------------------------------------------------|
         |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |[sleep]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |[pr_sc]|  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  |  F20  | [wake]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-        |       |  F21  |  F22  |  F23  |  F24  |       |       |       |       |       |       |  [off]|
+        |       |  F21  |  F22  |  F23  |  F24  |       |       |KVM PC1|KVM PC2|KVM OUT| KVM IN|[power]|
         |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
         |       |       |       |       | xxxxx | [BASE]|[BASE] | xxxxx |       |       |       |       |
         |-----------------------------------------------------------------------------------------------|
@@ -280,7 +288,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_F] = LAYOUT_planck_grid(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_SLEP,
         KC_PSCR, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_WAKE,
-        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,
+        _______, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX, XXXXXXX, KVM_PC1, KVM_PC2, KVM_OUT, KVM_IN  , KC_PWR,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
@@ -366,6 +374,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static bool caps_active = false;
+    static int kvm_pc = 1;
 
     switch (keycode) {
 
@@ -377,12 +386,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         ██   ██ ███████    ██     ██████  ██████  ██████  ███████ ███████
         */
 
-        case KC_CAPS:
-            if (record->event.pressed) {
-                caps_active = !caps_active;
+        // kvm switch
+        case KVM_PC1:
+            if(record->event.pressed) {
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_1);
+                kvm_pc = 1;
+            }
+            break;
+        case KVM_PC2:
+            if(record->event.pressed) {
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_2);
+                kvm_pc = 2;
+            }
+            break;
+        case KVM_IN:
+            if(record->event.pressed) {
+                tap_code(KC_RALT); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_RALT);
+            }
+            break;
+        case KVM_OUT:
+            if(record->event.pressed) {
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                tap_code(KC_SLCK); wait_ms(KVM_TAP_DELAY);
+                if (kvm_pc == 1) {
+                    tap_code(KC_4);
+                    kvm_pc = 2;
+                }
+                else {
+                    tap_code(KC_3);
+                    kvm_pc = 1;
+                }
             }
             break;
 
+        // contrl+shift
         case CTRL_SH:
             if (record->event.pressed) {
                 register_code(KC_LCTL);
@@ -394,8 +436,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
-        // rotary encoder state selection
+        // caps lock
+        case KC_CAPS:
+            if (record->event.pressed) {
+                caps_active = !caps_active;
+            }
+            break;
 
+        // rotary encoder state selection
         case R_VOL:
             if (record->event.pressed) {
                 rotary_state = E_VOLUME;
@@ -431,7 +479,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rotary_state = E_ARROW_H;
             }
             break;
-        case ROTARY:
+        case ENCODER:
             if (record->event.pressed) {
                 if (rotary_state == E_VOLUME) {
                     tap_code(KC_MUTE);  // toggle mute
