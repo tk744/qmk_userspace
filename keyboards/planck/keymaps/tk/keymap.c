@@ -55,6 +55,7 @@ enum planck_layers {
     _R1,
     _L2,
     _R2,
+    _I3,
     _KB,
     _F,
 };
@@ -99,6 +100,12 @@ enum keycodes {
     M_SHBNG,    // #!/usr/bin/env 
     M_CHMOD,    // chmod 744
     M_VENV,     // source *env*/bin/activate
+
+    // olkb emulator keys
+    OLKB_00, OLKB_01, OLKB_02, OLKB_03, OLKB_04, OLKB_05, OLKB_06, OLKB_07, OLKB_08, OLKB_09,
+    OLKB_10, OLKB_11, OLKB_12, OLKB_13, OLKB_14, OLKB_15, OLKB_16, OLKB_17, OLKB_18, OLKB_19,
+    OLKB_20, OLKB_21, OLKB_22, OLKB_23, OLKB_24, OLKB_25, OLKB_26, OLKB_27, OLKB_28, OLKB_29,
+    OLKB_35,
 };
 
 #define BASE   TO(_BASE)
@@ -272,6 +279,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, XXXXXXX, _______, _______, BASE,    _______, _______, _______, _______
     ),
 
+    /* I3 - emulate Linux i3 config using Windows PowerToys
+
+        |-----------------------------------------------------------------------------------------------|
+        |       |olkb_00|olkb_01|olkb_02|olkb_03|olkb_04|olkb_05|olkb_06|olkb_07|olkb_08|olkb_09|       |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |olkb_10|olkb_11|olkb_12|olkb_13|olkb_14|olkb_15|olkb_16|olkb_17|olkb_18|olkb_19|      |
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        | [run] |olkb_20|olkb_21|olkb_22|olkb_23|olkb_24|olkb_25|olkb_26|olkb_27|olkb_28|olkb_29| [kill]|
+        |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
+        |       |       |       |       |       | xxxxx |olkb_35|       |       |       |       |       |
+        |-----------------------------------------------------------------------------------------------|
+
+    */
+    [_I3] = LAYOUT_planck_grid(
+        _______, OLKB_00, OLKB_01, OLKB_02, OLKB_03, OLKB_04, OLKB_05, OLKB_06, OLKB_07, OLKB_08, OLKB_09, _______,
+        _______, OLKB_10, OLKB_11, OLKB_12, OLKB_13, OLKB_14, OLKB_15, OLKB_16, OLKB_17, OLKB_18, OLKB_19, _______,
+        _______, OLKB_20, OLKB_21, OLKB_22, OLKB_23, OLKB_24, OLKB_25, OLKB_26, OLKB_27, OLKB_28, OLKB_29, _______,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, OLKB_35, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+    ),
+
     /* F - function keys, system keys (sleep, wake, power down), KVM switch hotkeys, print screen
 
         |-----------------------------------------------------------------------------------------------|
@@ -292,7 +319,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
-    /* KB - dynamic macros, rotary select, audio settings, reboot
+    /* KB - modify keyboard in terms of dynamic macros, rotary select, audio settings, and reboot
 
         |--------------------------------------------------------------------------------------------------|
         |         |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|        |
@@ -668,11 +695,8 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
 */
 
-
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
-    static int scroll_interval = 5;
-
     switch (rotary_state) {
         case E_VOLUME:
             if (clockwise) {
@@ -701,25 +725,25 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         case E_SCROLL_V:
             if (clockwise) {
                 // tap_code(KC_PGDN);
-                for (int i=0; i<scroll_interval; i++) {
+                for (int i=0; i<SCROLL_INTERVAL; i++) {
                     tap_code(KC_WH_D);
                 }
             }
             else {
                 // tap_code(KC_PGUP);
-                for (int i=0; i<scroll_interval; i++) {
+                for (int i=0; i<SCROLL_INTERVAL; i++) {
                     tap_code(KC_WH_U);
                 }
             }
             break;
         case E_SCROLL_H:
             if (clockwise) {
-                for (int i=0; i<scroll_interval; i++) {
+                for (int i=0; i<SCROLL_INTERVAL; i++) {
                     tap_code(KC_WH_R);
                 }
             }
             else {
-                for (int i=0; i<scroll_interval; i++) {
+                for (int i=0; i<SCROLL_INTERVAL; i++) {
                     tap_code(KC_WH_L);
                 }
             }
