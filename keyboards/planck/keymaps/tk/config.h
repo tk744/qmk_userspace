@@ -20,6 +20,8 @@
 
 #define KVM_TAP_DELAY 100       // delay between macro keys for KVM hotkeys
 
+#define SCROLL_INTERVAL 3       // number of times scroll button is tapped per encoder step
+
 /* qmk definitions */
 
 #define ENCODER_RESOLUTION 4    // dependent on rotary encoder
