@@ -65,6 +65,8 @@ enum encoder_states {
     E_VOLUME,     // volume up/down, toggle mute
     E_MEDIA,      // media next/previous, play/pause
     E_BRIGHTNESS, // brightness up/down
+    E_SCRUB,      // scrub history forward/backward
+    E_FIND,       // find results next/previous, search
     E_SCROLL_V,   // scroll up/down, middle click
     E_SCROLL_H,   // scroll right/left, middle click
     E_ARROW_V,    // arrow up/down
@@ -80,7 +82,8 @@ enum keycodes {
     CTRL_SH,    // CTRL + SH
     
     // rotary state selection
-    R_VOL, R_MEDIA, R_BRI, R_SC_V, R_SC_H, R_AR_V, R_AR_H,
+    R_VOL, R_MEDIA, R_BRI, R_SCRUB, R_FIND, 
+    R_SC_V, R_SC_H, R_AR_V, R_AR_H,
 
     // kvm macros
     KVM_PC1,    // show PC 1 on both monitors 
@@ -105,7 +108,7 @@ enum keycodes {
 #define HYPER  MO(_KB)
 #define ADJUST MO(_F)
 
-// these keys need to bee OSL so that xxx2 can be activated
+// these keys need to be OSL so that any layer xxx2 can be activated
 #define LOWER1  OSL(_L1)
 #define LOWER2  OSL(_L2)
 #define RAISE1  OSL(_R1)
@@ -292,14 +295,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BASE,    BASE,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
-    /* KB - modify keyboard in terms of dynamic macros, rotary select, audio settings, and reboot
+    /* KB - keyboard settings: select rotary function, set dynamic macros, audio toggles, reboot mode
 
         |--------------------------------------------------------------------------------------------------|
         |         |       |       |       |       |       |       |scrll h|scrll v|scrll v|scrll h|        |
         |---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
-        |[aud_tog]|       |       |       |       |       |       |arrow h|arrow v|arrow v|arrow h|[pio_tg]|
+        |[aud_tog]|       |       |       | find  |       |       |arrow h|arrow v|arrow v|arrow h|[pio_tg]|
         |---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
-        |[clk_tog]|       |       |       |  vol  | bright|       | media |       |       |       |[mod_tg]|
+        |[clk_tog]| scrub |       |       |  vol  | bright|       | media |       |       |       |[mod_tg]|
         |---------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--------|
         | [reboot]|[dm1 r]|       |       |       | [BASE]|[BASE] |       |       |       |[dm2 r]|[reboot]|
         |--------------------------------------------------------------------------------------------------|
@@ -307,8 +310,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_KB] = LAYOUT_planck_grid(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_SC_H,  R_SC_V,  R_SC_V,  R_SC_H,  _______,
-        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
-        CK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
+        AU_TOG,  XXXXXXX, XXXXXXX, XXXXXXX, R_FIND,  XXXXXXX, XXXXXXX, R_AR_H,  R_AR_V,  R_AR_V,  R_AR_H,  MU_TOG,
+        CK_TOGG, R_SCRUB, XXXXXXX, XXXXXXX, R_VOL,   R_BRI,   XXXXXXX, R_MEDIA, XXXXXXX, XXXXXXX, XXXXXXX, MU_MOD,
         RESET,   DM_REC1, _______, _______, _______,   BASE,    BASE,  _______, _______, _______, DM_REC2, RESET
     ),
 
@@ -459,6 +462,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rotary_state = E_BRIGHTNESS;
             }
             break;
+        case R_SCRUB:
+            if (record->event.pressed) {
+                rotary_state = E_SCRUB;
+            }
+            break;
+        case R_FIND:
+            if (record->event.pressed) {
+                rotary_state = E_FIND;
+            }
+            break;
         case R_SC_V:
             if (record->event.pressed) {
                 rotary_state = E_SCROLL_V;
@@ -486,6 +499,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 else if (rotary_state == E_MEDIA) {
                     tap_code(KC_MPLY);  // play/pause media
+                }
+                else if (rotary_state == E_FIND) {
+                    tap_code16(LCTL(KC_F));  // search
                 }
                 else if (rotary_state == E_SCROLL_V || rotary_state == E_SCROLL_H) {
                     tap_code(KC_BTN3);  // middle mouse button
@@ -627,6 +643,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case R_VOL:
             case R_MEDIA:
             case R_BRI:
+            case R_SCRUB:
+            case R_FIND:
             case R_SC_V:
             case R_SC_H:
             case R_AR_V:
@@ -693,6 +711,22 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             }
             else {
                 tap_code(KC_BRID);
+            }
+            break;
+        case E_SCRUB:
+            if (clockwise) {
+                tap_code16(LCTL(KC_Y));
+            }
+            else {
+                tap_code16(LCTL(KC_Z));
+            }
+            break;
+        case E_FIND:
+            if (clockwise) {
+                tap_code(KC_F3);
+            }
+            else {
+                tap_code16(LSFT(KC_F3));
             }
             break;
         case E_SCROLL_V:
