@@ -30,6 +30,8 @@
 
 #define TAPPING_TERM 200        // mod tap tap-window
 
+#define DEBOUNCING_DELAY 5      // set to 0 if not needed
+
 // oneshot keys --
 
 #define ONESHOT_TAP_TOGGLE 25   // taps to toggle a one-shot layer/key persistence
